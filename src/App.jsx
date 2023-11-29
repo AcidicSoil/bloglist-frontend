@@ -54,7 +54,7 @@ const App = () => {
       <h1>Blogs</h1>
       <Notification notification={notification} />
       <BlogForm onAddBlog={addBlog} />
-      <BlogList blogs={blogs} onUpdateBlog={updateBlog} onDeleteBlog={deleteBlog} />
+      <BlogList blogs={blogs} setBlogs={setBlogs} onUpdateBlog={updateBlog} onDeleteBlog={deleteBlog} />
     </div>
   );
 };
