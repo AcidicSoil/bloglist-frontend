@@ -1,14 +1,30 @@
-import React from 'react';
+import blogService from '../services/blogs';
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, onDelete, onLike }) => {
+  const handleLike = async () => {
+    const updatedBlog = { ...blog, likes: blog.likes + 1 };
+    await blogService.update(blog.id, updatedBlog);
+    onLike(blog.id, updatedBlog);
+  };
+
+  const handleDelete = async () => {
+    if (window.confirm(`Delete blog "${blog.title}" by ${blog.author}?`)) {
+      await blogService.remove(blog.id);
+      onDelete(blog.id);
+    }
+  };
+
   return (
-    <li>
-      <h3>{blog.title} by {blog.author}</h3>
-      <p>URL: <a href={blog.url} target="_blank" rel="noopener noreferrer">{blog.url}</a></p>
-      <p>Likes: {blog.likes} <button>Like</button></p>
-      {/* You can add functionality to the Like button here */}
-      {/* Additional functionalities like delete or edit can also be added if needed */}
-    </li>
+    <div>
+      <h3>{blog.title}</h3>
+      <p>{blog.author}</p>
+      <p>{blog.url}</p>
+      <p>
+        Likes: {blog.likes}
+        <button onClick={handleLike}>Like</button>
+      </p>
+      <button onClick={handleDelete}>Delete</button>
+    </div>
   );
 };
 

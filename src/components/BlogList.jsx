@@ -1,14 +1,25 @@
-import Blog from './Blog'; // Assume Blog is a component to render individual blog post
+import Blog from './Blog';
 
-const BlogList = ({ blogs }) => {
+const BlogList = ({ blogs, setBlogs }) => {
+  const handleLike = (id, updatedBlog) => {
+    setBlogs(blogs.map(blog => blog.id === id ? updatedBlog : blog));
+  };
+
+  const handleDelete = (id) => {
+    setBlogs(blogs.filter(blog => blog.id !== id));
+  };
+
   return (
     <div>
       <h2>All Blogs</h2>
-      <ul>
-        {blogs.map(blog => (
-          <Blog key={blog.id} blog={blog} />
-        ))}
-      </ul>
+      {blogs.map(blog => 
+        <Blog 
+          key={blog.id} 
+          blog={blog} 
+          onDelete={handleDelete} 
+          onLike={handleLike} 
+        />
+      )}
     </div>
   );
 };
